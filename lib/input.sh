@@ -18,7 +18,7 @@ PORT="${INPUT_PORT:-}"									# Set server connecting protocol 	default: NONE
 # AUTHENTICATION RELATED INPUTS
 USERNAME="${INPUT_USERNAME:?No user was specified}"		# User authentication
 PASSWORD="${INPUT_PASSWORD:-}"							
-SSH_KEY="${INPUT_SSH_PRIVATE_KEY:-}"					# SSH key used for SFTP & RSYNC transfers
+SSH_KEY="${INPUT_SSH_KEY:-}"					# SSH key used for SFTP & RSYNC transfers
 
 # DIRECTORY DEFAULTS
 LOCAL_DIR="${INPUT_LOCAL_DIR:-.}"						# Set the local directory 			default: /app

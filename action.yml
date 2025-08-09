@@ -21,14 +21,14 @@ inputs:
   password:
     description: "Password (FTP/SFTP/SSH). Prefer keys for SFTP/SSH."
     required: false
-  ssh-private-key:
+  ssh_key:
     description: "PEM-encoded private key for SFTP/SSH"
     required: false
-  local-dir:
+  local_dir:
     description: "Local directory to upload (relative to GITHUB_WORKSPACE)"
     default: "."
     required: false
-  remote-dir:
+  remote_dir:
     description: "Remote directory path"
     default: "/"
     required: false
@@ -36,7 +36,7 @@ inputs:
     description: "Use FTPS (TLS). true|false"
     default: "true"
     required: false
-  verify-tls:
+  verify_tls:
     description: "Verify TLS cert (FTPS). true|false"
     default: "true"
     required: false
@@ -48,31 +48,31 @@ inputs:
     description: "Parallel transfers for lftp mirror (1-5 safe)"
     default: "2"
     required: false
-  extra-lftp:
+  extra_lftp:
     description: "Extra lftp commands (advanced)"
     required: false
   delete:
     description: "Delete remote files not present locally (sync)"
     default: "false"
     required: false
-  only-newer:
+  only_newer:
     description: "Upload only newer files"
     default: "true"
     required: false
   exclude:
     description: "Comma-separated exclude globs (e.g. .git,node_modules,*.log)"
     required: false
-  dry-run:
+  dry_run:
     description: "Plan mode—don’t actually write changes"
     default: "false"
     required: false
-  pre-script:
+  pre_script:
     description: "Command(s) to run on the remote host BEFORE upload"
     required: false
-  post-script:
+  post_script:
     description: "Command(s) to run on the remote host AFTER upload"
     required: false
-  remote-shell:
+  remote_shell:
     description: "Remote shell to use for scripts (e.g., /bin/bash -lc)"
     default: "/bin/bash -lc"
     required: false
