@@ -2,23 +2,24 @@ name: Deploy to FTP (Sync)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
-  deploy:
+  ftps_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - name: Full Sync to FTP Server
-        uses: Black-HOST/deployer@v1
+        uses: ./
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           port: "21"
           protocol: "ftp"
-          remote-dir: "/public_html"
+          local-dir: ".github/artifacts"
+          remote-dir: "/public_html/ftps"
           secure: "true"
           verify-tls: "true"
           passive: "true"

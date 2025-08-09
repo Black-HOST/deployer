@@ -51,7 +51,7 @@ jobs:
           remote-dir: "/public_html"
 ```
 
-For more advanced usage, see the [`examples/`](examples/) folder in this repository.
+For more advanced usage, see the [`.github/workflows/`](.github/workflows/) folder in this repository.
 
 ---
 
