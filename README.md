@@ -1,11 +1,12 @@
-# 🚀 Deployer 9000
+# 🚀 DEP 9000
 
-A lightweight, CI/CD-ready deployment tool for GitHub Actions and other automation environments. Deploy your code via FTP, FTPS, SFTP, or SSH with simple configuration and secure best practices.
+Deployer 9000 is a lightweight, CI/CD-ready deployment tool for GitHub Actions and other automation environments. Deploy your code via FTP, FTPS, SFTP, or SSH with simple configuration and secure best practices.
 
 ---
 
 ## ✨ Features
 
+- 🚦 **Deploys always:** You won't see messages like "I'm sorry, Dave, I'm afraid I can't let you deploy that..." - Unlike his cousin HAL, DEP 9000 gets the job done!
 - 🔌 **Protocol Support:** FTP, FTPS (with TLS), SFTP, SSH (rsync)
 - 🤖 **CI/CD Ready:** Designed for seamless integration with GitHub Actions
 - 🛡️ **Secure by Default:** Enforces SSL/TLS verification, supports SSH keys
