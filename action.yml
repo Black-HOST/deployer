@@ -1,0 +1,96 @@
+name: "Deployer 9000"
+description: "Deploy code via FTP/FTPS/SFTP (lftp), or SSH (rsync) and run pre/post deploy commands on remote servers"
+author: "BlackHOST"
+branding:
+    icon: "upload-cloud"
+    color: "blue"
+
+inputs:
+    protocol:
+        description: "ftp | sftp | ssh"
+        required: false
+        default: "ftp"
+
+    server:
+        description: "Remote host or IP"
+        required: true
+    port:
+        description: "Remote port. If omitted, defaults to 21 (ftp), 22 (sftp/ssh)"
+        required: false
+
+  # Auth
+    username:
+        description: "Username (FTP/SFTP/SSH)"
+        required: true
+    password:
+        description: "Password (FTP/SFTP/SSH). Prefer keys for SFTP/SSH."
+        required: false
+    ssh-private-key:
+        description: "PEM-encoded private key for SFTP/SSH"
+        required: false
+
+  # Common paths 
+    local-dir:
+        description: "Local directory to upload (relative to GITHUB_WORKSPACE)"
+        default: "."
+        required: false
+    remote-dir:
+        description: "Remote directory path"
+        default: "/"
+        required: false
+
+  # FTP/FTPS specific config
+    secure:
+        description: "Use FTPS (TLS). true|false"
+        default: "true"
+        required: false
+    verify-tls:
+        description: "Verify TLS cert (FTPS). true|false"
+        default: "true"
+        required: false
+    passive:
+        description: "Passive mode (FTP/FTPS)"
+        default: "true"
+        required: false
+    parallel:
+        description: "Parallel transfers for lftp mirror (1-5 safe)"
+        default: "2"
+        required: false
+    extra-lftp:
+        description: "Extra lftp commands (advanced)"
+        required: false
+
+  # Data transfer config
+    delete:
+        description: "Delete remote files not present locally (sync)"
+        default: "false"
+        required: false
+    only-newer:
+        description: "Upload only newer files"
+        default: "true"
+        required: false
+    exclude:
+        description: "Comma-separated exclude globs (e.g. .git,node_modules,*.log)"
+        required: false
+    dry-run:
+        description: "Plan mode—don’t actually write changes"
+        default: "false"
+        required: false
+
+  # Remote commands (run via SSH)
+    pre-script:
+        description: "Command(s) to run on the remote host BEFORE upload"
+        required: false
+    post-script:
+        description: "Command(s) to run on the remote host AFTER upload"
+        required: false
+    remote-shell:
+        description: "Remote shell to use for scripts (e.g., /bin/bash -lc)"
+        default: "/bin/bash -lc"
+        required: false
+
+outputs: {}
+
+runs:
+    using: "docker"
+    image: "Dockerfile"
