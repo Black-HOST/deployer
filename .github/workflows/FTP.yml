@@ -5,6 +5,8 @@ on:
     branches: [ "master" ]
 
 jobs:
+
+  # Test full directory dync over FTPS
   sync:
     runs-on: ubuntu-latest
     steps:
@@ -28,6 +30,8 @@ jobs:
           parallel: "2"
           exclude: ".git,node_modules,*.log"
           dry_run: "false"
+
+  # Test incremental file uploads over FTPS
   incremental:
     runs-on: ubuntu-latest
     steps:
@@ -43,6 +47,8 @@ jobs:
           remote_dir: "/public_html/FTP/incremental"
           secure: "true"
           only_newer: "true"
+
+  # Test simple file upload over unsecure FTP
   unsecure:
     runs-on: ubuntu-latest
     steps:
