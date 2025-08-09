@@ -1,0 +1,29 @@
+name: Deploy to FTP (Sync)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Full Sync to FTP Server
+        uses: Black-HOST/deployer@v1
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          port: "21"
+          protocol: "ftp"
+          remote-dir: "/public_html"
+          secure: "true"
+          verify-tls: "true"
+          passive: "true"
+          delete: "true"
+          only-newer: "false"
+          parallel: "2"
+          exclude: ".git,node_modules,*.log"
+          dry-run: "false"
