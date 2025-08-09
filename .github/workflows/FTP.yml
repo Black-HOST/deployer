@@ -40,7 +40,7 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           local_dir: ".github/artifacts"
-          remote_dir: "/public_html/FTP/unsecure"
+          remote_dir: "/public_html/FTP/incremental"
           secure: "true"
           only_newer: "true"
   unsecure:
