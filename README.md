@@ -66,19 +66,19 @@ For more advanced usage, see the [`.github/workflows/`](.github/workflows/) fold
 | port             | No       | `22`                         | protocol default | Port for the chosen protocol (`21` for FTP, `22` for SFTP/SSH).|
 | username         | Yes      | `deploy`                     | —             | Login username.                                             |
 | password         | No       | `superSecretPassword`        | —             | Login password (FTP/SFTP only).                             |
-| ssh-private-key  | No       | `<private-key>`              | —             | SSH private key for SFTP/SSH.                              |
-| local-dir        | No       | `dist`                       | `.`           | Local directory to upload.                                  |
-| remote-dir       | No       | `/public_html`               | `/`           | Remote directory on the server.                             |
+| ssh_key  | No       | `<private-key>`              | —             | SSH private key for SFTP/SSH.                              |
+| local_dir        | No       | `dist`                       | `.`           | Local directory to upload.                                  |
+| remote_dir       | No       | `/public_html`               | `/`           | Remote directory on the server.                             |
 | secure           | No       | `true`                       | `true`        | Use FTPS (FTP over TLS).                                    |
-| verify-tls       | No       | `true`                       | `true`        | Verify SSL certificate for FTPS.                            |
+| verify_tls       | No       | `true`                       | `true`        | Verify SSL certificate for FTPS.                            |
 | passive          | No       | `true`                       | `true`        | FTP passive mode.                                           |
 | parallel         | No       | `2`                          | `2`           | Number of parallel file transfers.                          |
 | delete           | No       | `true`                       | `false`       | Remove remote files not present locally (sync mode).         |
-| only-newer       | No       | `true`                       | `true`        | Sync only files newer than remote files.                    |
+| only_newer       | No       | `true`                       | `true`        | Sync only files newer than remote files.                    |
 | exclude          | No       | `.git,node_modules,*.log`    | `.git,node_modules,*.log`             | Comma-separated list of file/directory patterns to exclude. |
-| dry-run          | No       | `true`                       | `false`       | Run without making changes (test the deployment).           |
-| pre-script       | No       | `echo Pre deploy`            | —             | Shell script to run before transfer.                        |
-| post-script      | No       | `echo Post deploy`           | —             | Shell script to run after transfer.                         |
+| dry_run          | No       | `true`                       | `false`       | Run without making changes (test the deployment).           |
+| pre_script       | No       | `echo Pre deploy`            | —             | Shell script to run before transfer.                        |
+| post_script      | No       | `echo Post deploy`           | —             | Shell script to run after transfer.                         |
 
 ---
 

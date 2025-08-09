@@ -5,12 +5,12 @@ on:
     branches: [ "master" ]
 
 jobs:
-  ftps_sync:
+  sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Full Sync to FTP Server
+      - name: Full Sync to FTP Server over FTPS
         uses: ./
         with:
           server: ${{ secrets.FTP_HOST }}
@@ -19,7 +19,7 @@ jobs:
           port: "21"
           protocol: "ftp"
           local_dir: ".github/artifacts"
-          remote_dir: "/public_html/FTPS/sync"
+          remote_dir: "/public_html/FTP/sync"
           secure: "true"
           verify_tls: "true"
           passive: "true"
@@ -28,3 +28,32 @@ jobs:
           parallel: "2"
           exclude: ".git,node_modules,*.log"
           dry_run: "false"
+  incremental:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Incremental file upload over FTPS
+        uses: ./
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local_dir: ".github/artifacts"
+          remote_dir: "/public_html/FTP/unsecure"
+          secure: "true"
+          only_newer: "true"
+  unsecure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Unsecure upload over FTP (not-recommended)
+        uses: ./
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local_dir: ".github/artifacts"
+          remote_dir: "/public_html/FTP/unsecure"
+          secure: "false"
