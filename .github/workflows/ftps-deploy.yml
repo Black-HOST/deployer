@@ -1,11 +1,11 @@
-name: Deploy to FTP (Sync)
+name: FTP
 
 on:
   push:
     branches: [ "master" ]
 
 jobs:
-  ftps_deploy:
+  ftps_sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
