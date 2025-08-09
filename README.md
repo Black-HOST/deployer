@@ -1,5 +1,7 @@
 # 🚀 DEP 9000
 
+[![FTP](https://github.com/Black-HOST/deployer/actions/workflows/ftps-deploy.yml/badge.svg)](https://github.com/Black-HOST/deployer/actions/workflows/ftps-deploy.yml)
+
 Deployer 9000 is a lightweight, CI/CD-ready deployment tool for GitHub Actions and other automation environments. Deploy your code via FTP, FTPS, SFTP, or SSH with simple configuration and secure best practices.
 
 ---
