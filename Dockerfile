@@ -6,6 +6,9 @@ RUN apk add --no-cache \
 	openssh-client rsync sshpass\
 	&& update-ca-certificates
 
+# create the .ssh dir
+RUN mkdir /root/.ssh
+
 # set the deployer working dir
 WORKDIR /app
 

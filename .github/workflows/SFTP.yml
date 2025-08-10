@@ -16,6 +16,7 @@ jobs:
         with:
           protocol: sftp
           server: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
           local_dir: ".github/artifacts"
