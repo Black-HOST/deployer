@@ -2,7 +2,7 @@ name: Image build
 
 on:
   workflow_run:
-    workflows: [FTP]
+    workflows: [FTP, SFTP]
     types: [completed]
 
 env:
