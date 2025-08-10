@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  password:
+  basic:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,4 +20,4 @@ jobs:
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
           local_dir: ".github/artifacts"
-          remote_dir: "/public_html/SFTP/password"
+          remote_dir: "public_html/SFTP/basic"
