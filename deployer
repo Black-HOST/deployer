@@ -23,6 +23,10 @@ case "$PROTOCOL" in
 		FTP
 	;;
 
+	sftp)
+		SFTP
+	;;
+
 	*)
 		die "Unsupported protocol: $PROTOCOL (expected ftp|sftp|ssh)"
 	;;

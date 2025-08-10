@@ -13,29 +13,29 @@
 PROTOCOL="${INPUT_PROTOCOL:-ftp}"						# Define connection type ftp, sftp, ssh 
 
 SERVER="${INPUT_SERVER:?Hostname of IP is required}"	# Require hostname or IP
-PORT="${INPUT_PORT:-}"									# Set server connecting protocol 	default: NONE
+PORT="${INPUT_PORT:-}"									# Set server connecting protocol 				default: NONE
 
 # AUTHENTICATION RELATED INPUTS
 USERNAME="${INPUT_USERNAME:?No user was specified}"		# User authentication
 PASSWORD="${INPUT_PASSWORD:-}"							
-SSH_KEY="${INPUT_SSH_KEY:-}"					# SSH key used for SFTP & RSYNC transfers
+SSH_KEY="${INPUT_SSH_KEY:-}"							# SSH key used for SFTP & RSYNC transfers
 
 # DIRECTORY DEFAULTS
-LOCAL_DIR="${INPUT_LOCAL_DIR:-.}"						# Set the local directory 			default: /app
-REMOTE_DIR="${INPUT_REMOTE_DIR:-/}"						# Set the remote upload directory 	default: / ( user home ) 
+LOCAL_DIR="${INPUT_LOCAL_DIR:-.}"						# Set the local directory 						default: /app
+REMOTE_DIR="${INPUT_REMOTE_DIR:-/}"						# Set the remote upload directory 				default: / ( user home ) 
 
 # FTP/LFTP CONFIG
-SECURE="$(to_bool "${INPUT_SECURE:-true}")"				# Switch between FTPS/FTP 			default: true (FTPS)
-VERIFY_TLS="$(to_bool "${INPUT_VERIFY_TLS:-true}")"		# Verify SSL certificate  			default: true
-PASSIVE="$(to_bool "${INPUT_PASSIVE:-true}")"			# Set FTP passive mode 				default: true
-PARALLEL="${INPUT_PARALLEL:-2}"							# Number of concurrent transfers: 	default: 2
-EXTRA_LFTP="${INPUT_EXTRA_LFTP:-}"						# Extra LFTP config options			default: NONE		
+SECURE="$(to_bool "${INPUT_SECURE:-true}")"				# Switch between FTPS/FTP 						default: true (FTPS)
+VERIFY_TLS="$(to_bool "${INPUT_VERIFY_TLS:-true}")"		# Verify SSL certificate  						default: true
+PASSIVE="$(to_bool "${INPUT_PASSIVE:-true}")"			# Set FTP passive mode 							default: true
+PARALLEL="${INPUT_PARALLEL:-2}"							# Number of concurrent transfers 				default: 2
+EXTRA_LFTP="${INPUT_EXTRA_LFTP:-}"						# Extra LFTP config options						default: NONE		
 
 # DATA TRANSFER config
-DELETE="$(to_bool "${INPUT_DELETE:-false}")"			# Enable file deletes 				default: false
-ONLY_NEWER="$(to_bool "${INPUT_ONLY_NEWER:-true}")"		# SYNC only new files				default: false
-EXCLUDE="${INPUT_EXCLUDE:-}"							# List of files to be excluded		default: NONE
-DRY_RUN="$(to_bool "${INPUT_DRY_RUN:-false}")"			# Perform a dry run only 			default: false
+DELETE="$(to_bool "${INPUT_DELETE:-false}")"			# Enable file deletes 							default: false
+ONLY_NEWER="$(to_bool "${INPUT_ONLY_NEWER:-true}")"		# SYNC only new files							default: false
+EXCLUDE="${INPUT_EXCLUDE:-}"							# List of files to be excluded					default: NONE
+DRY_RUN="$(to_bool "${INPUT_DRY_RUN:-false}")"			# Perform a dry run only 						default: false
 
 
 # REMOTE COMMAND EXECUTION

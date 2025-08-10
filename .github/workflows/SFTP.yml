@@ -1,0 +1,22 @@
+name: SFTP
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+
+  password:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Password based SFTP deploy (not-recommended)
+        uses: ./
+        with:
+          protocol: sftp
+          server: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASS }}
+          local_dir: ".github/artifacts"
+          remote_dir: "/public_html/SFTP/password"
