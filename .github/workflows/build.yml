@@ -1,9 +1,8 @@
 name: Image build
 
 on:
-  workflow_run:
-    workflows: [FTP, SFTP]
-    types: [completed]
+  release:
+    types: [published] 
 
 env:
   REGISTRY: ghcr.io
