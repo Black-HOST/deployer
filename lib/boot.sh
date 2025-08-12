@@ -57,7 +57,7 @@
 
 		# handle password protected keys and password based authentication
 		if [[ -n "$PASSWORD" ]]; then
-			SSH_CMD=(sshpass -v -P 'password' -p "$PASSWORD" "${SSH_CMD[@]}")
+			SSH_CMD=(sshpass -v -P 'pass' -p "$PASSWORD" "${SSH_CMD[@]}")
 		fi
 
 		# TOFU (Trust On First Use) by fetching the remote server public keys
