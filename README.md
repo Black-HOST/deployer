@@ -84,8 +84,15 @@ For more advanced usage, see the [`.github/workflows/`](.github/workflows/) fold
 
 ---
 
+## ⚠️ Disclaimer
+This software is provided "as is" without warranty of any kind, express or implied. While it has been tested extensively, you should use it at your own risk.
+
+Be especially cautious when using the `delete: true` option, as it will permanently remove files from your remote server that do not exist in your local directory. If you don't feel confident, always perform a dry_run: true first to verify which files will be deleted.
+
+---
+
 ## 📄 License
 
-This project is maintained by [Black HOST Ltd.](https://github.com/Black-HOST).
+This project is maintained by [Black HOST Ltd.](https://black.host) and licensed under the MIT License.
 
-See LICENSE file for details.
+See [`LICENSE`](LICENSE) file for more details.
