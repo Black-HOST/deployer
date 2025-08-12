@@ -10,7 +10,7 @@ RUN apk add --no-cache \
 RUN mkdir /root/.ssh
 
 # set the deployer working dir
-WORKDIR /app
+WORKDIR /deploy
 
 # install the deployer binaries
 COPY deployer /usr/bin/deployer
