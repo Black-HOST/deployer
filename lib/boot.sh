@@ -17,8 +17,9 @@
 # ######################################################################################################################
 #
 	# OUTPUT LOGGERS
-	log() { echo "[DEPLOYER] $*"; }
-	err() { echo "[DEPLOYER] Error: $*" >&2; }
+	ok() { echo -e "\e[32m[DEPLOYER]\e[0m $*"; }
+	log() { echo -e "\e[36m[DEPLOYER]\e[0m $*"; }
+	err() { echo -e "\e[31m[DEPLOYER]\e[0m Error: $*" >&2; }
 	die() { err "$@"; exit 1; }
 
 	# cast config option into bool

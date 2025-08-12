@@ -19,22 +19,12 @@ for f in /usr/share/deployer/*.sh; do source "$f"; done
 ## PROTOCOL ROUTER
 case "$PROTOCOL" in
 
-	ftp)
-		FTP
-	;;
+	ftp)	FTP;;
+	sftp) 	SFTP;;
+	rsync)	RSYNC;;
 
-	sftp)
-		SFTP
-	;;
-
-	rsync)
-		RSYNC
-	;;
-
-	*)
-		die "Unsupported protocol: $PROTOCOL (expected ftp|sftp|rsync|ssh)"
-	;;
+	*)		die "Unsupported protocol: $PROTOCOL (expected ftp|sftp|rsync|ssh)";;
 
 esac
 
-log "Yatta! The deployment has been complted."
+ok "Yatta! The deployment has been complted."
