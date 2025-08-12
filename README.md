@@ -2,6 +2,7 @@
 
 [![FTP](https://github.com/Black-HOST/deployer/actions/workflows/FTP.yml/badge.svg)](https://github.com/Black-HOST/deployer/actions/workflows/FTP.yml)
 [![SFTP](https://github.com/Black-HOST/deployer/actions/workflows/SFTP.yml/badge.svg)](https://github.com/Black-HOST/deployer/actions/workflows/SFTP.yml)
+[![RSYNC](https://github.com/Black-HOST/deployer/actions/workflows/RSYNC.yml/badge.svg)](https://github.com/Black-HOST/deployer/actions/workflows/RSYNC.yml)
 
 Deployer 9000 is a lightweight, CI/CD-ready deployment tool for GitHub Actions and other automation environments. Deploy your code via FTP, FTPS, SFTP, or SSH with simple configuration and secure best practices.
 

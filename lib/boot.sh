@@ -50,13 +50,15 @@
 
 			# add the key to the SSH executable
 			SSH_CMD+=(-i "$SSH_KEY_PATH")
-
-			# escape the password for SFPT mode
-			[[ $PROTOCOL == sftp ]] && PASSWORD=$(printf '%q' "$PASSWORD")
 		fi
 
 		# handle password protected keys and password based authentication
 		if [[ -n "$PASSWORD" ]]; then
+
+			# escape the password for SFPT mode
+			[[ $PROTOCOL == sftp ]] && PASSWORD=$(printf '%q' "$PASSWORD")
+
+			# add sshpass when password is provided (indicating there is some pass based auth)
 			SSH_CMD=(sshpass -v -P 'pass' -p "$PASSWORD" "${SSH_CMD[@]}")
 		fi
 
