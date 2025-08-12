@@ -1,0 +1,56 @@
+name: RSYNC
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+
+  basic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Password based SFTP deploy (not-recommended)
+        uses: ./
+        with:
+          protocol: rsync
+          server: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASS }}
+          local_dir: ".github/artifacts"
+          remote_dir: "public_html/RSYNC/basic"
+
+  passwordless:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authentication with passwordless SSH key
+        uses: ./
+        with:
+          protocol: rsync
+          server: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
+          username: ${{ secrets.SFTP_USER }}
+          ssh_key: ${{ secrets.SFTP_OPEN_KEY }}
+          local_dir: ".github/artifacts"
+          remote_dir: "public_html/RSYNC/passwordless"
+
+  protected:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authentication with password protected SSH key
+        uses: ./
+        with:
+          protocol: rsync
+          server: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_KEY_PASS }}
+          ssh_key: ${{ secrets.SFTP_KEY }}
+          local_dir: ".github/artifacts"
+          remote_dir: "public_html/RSYNC/protected"
