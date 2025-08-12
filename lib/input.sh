@@ -34,9 +34,10 @@ EXTRA_LFTP="${INPUT_EXTRA_LFTP:-}"						# Extra LFTP config options						default
 # DATA TRANSFER config
 DELETE="$(to_bool "${INPUT_DELETE:-false}")"			# Enable file deletes 							default: false
 ONLY_NEWER="$(to_bool "${INPUT_ONLY_NEWER:-true}")"		# SYNC only new files							default: false
-EXCLUDE="${INPUT_EXCLUDE:-}"							# List of files to be excluded					default: NONE
 DRY_RUN="$(to_bool "${INPUT_DRY_RUN:-false}")"			# Perform a dry run only 						default: false
 
+# DEFAULT EXCLUDE LIST	
+EXCLUDE="${INPUT_EXCLUDE:-.*,.*/,node_modules/,*.log}"
 
 # REMOTE COMMAND EXECUTION
 PRE_SCRIPT="${INPUT_PRE_SCRIPT:-}"						# Run a script prior to the transfers
@@ -57,7 +58,7 @@ if [[ -z "$PORT" ]]; then
 		sftp) PORT="22" ;;
 		ssh)  PORT="22" ;;
 		rsync)  PORT="22" ;;
-		*)    die "Unsupported protocol: $PROTOCOL (expected ftp|sftp|ssh)";;
+		*)    die "Unsupported protocol: $PROTOCOL (expected ftp|sftp|rsync|ssh)";;
 	esac
 fi
 
@@ -66,4 +67,4 @@ LOCAL_DIR="${LOCAL_DIR%/}"
 REMOTE_DIR="${REMOTE_DIR%/}"
 
 # convert excludes into an array
-mapfile -t EXCLUDE_ARR < <(echo "$EXCLUDE" | tr ',' '\n' | sed '/^[[:space:]]*$/d' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+mapfile -t EXCLUDE_ARR < <(echo "$EXCLUDE" | sed -e 's/[ \t]*,[ \t]*/\n/g' | sed '/^$/d')
