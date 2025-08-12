@@ -39,7 +39,7 @@
 
 		# set the base SSH command
 		# BatchMode=no is required to allow the passphrase prompt for sshpass.
-		SSH_BIN=(ssh -o IdentitiesOnly=yes -o BatchMode=no -o ForwardAgent=no -o ForwardX11=no)
+		SSH_CMD=(ssh -o IdentitiesOnly=yes -o BatchMode=no -o ForwardAgent=no -o ForwardX11=no -p$PORT)
 
 		if [[ -n "$SSH_KEY" ]]; then
 
@@ -49,14 +49,35 @@
 			chmod 600 "$SSH_KEY_PATH"
 
 			# add the key to the SSH executable
-			SSH_BIN+=(-i "$SSH_KEY_PATH")
+			SSH_CMD+=(-i "$SSH_KEY_PATH")
 
 			# handle password protected keys and password based authentication
 			if [[ -n "$PASSWORD" ]]; then
-				SSH_BIN=(sshpass -P 'pass' -p "$(printf '%q' "$PASSWORD")" "${SSH_BIN[@]}")
+				SSH_CMD=(sshpass -P 'pass' -p "$(printf '%q' "$PASSWORD")" "${SSH_CMD[@]}")
 			fi
 		fi
 
 		# TOFU (Trust On First Use) by fetching the remote server public keys
 		ssh-keyscan -p "$PORT" -T 20 "$SERVER" >> "$KNOWN_HOSTS" 2>/dev/null || true
+	}
+
+	# define deployment flags
+	mirror_flags() 
+	{
+
+		# set dynamic flags values based on sync tool
+		[[ ${1:-} == rsync ]] \
+			&& { EXCLUDE_FLAG=--exclude=;     UPDATE_FLAG=--update;     MIRROR_FLAGS=(-az --human-readable --info=STATS2,PROGRESS2); } \
+			|| { EXCLUDE_FLAG=--exclude-glob; UPDATE_FLAG=--only-newer; MIRROR_FLAGS=(-R --verbose --parallel="$PARALLEL"); }
+
+		# set miroring flafgs 
+		[[ "$DELETE" == "true" ]]    && MIRROR_FLAGS+=(--delete)
+		[[ "$ONLY_NEWER" == "true" ]]&& MIRROR_FLAGS+=("$UPDATE_FLAG")
+		[[ "$DRY_RUN" == "true" ]]   && MIRROR_FLAGS+=(--dry-run)
+
+		# generate the exclude argguments
+		EXCLUDE_ARGS=()
+		for path in "${EXCLUDE_ARR[@]}"; do
+		  EXCLUDE_ARGS+=("$EXCLUDE_PREFIX" "$path")
+		done
 	}

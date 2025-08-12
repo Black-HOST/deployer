@@ -14,7 +14,7 @@
 FTP() 
 {
 	# build lftp mirroring & exclude flags
-	lftp_flags
+	mirror_flags
 
 	# disable SSL verification
 	local SSL_VERIFY="yes"; [[ "$VERIFY_TLS" == "false" ]] && SSL_VERIFY="no"

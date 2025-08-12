@@ -56,6 +56,7 @@ if [[ -z "$PORT" ]]; then
 		ftp)  PORT="21" ;;
 		sftp) PORT="22" ;;
 		ssh)  PORT="22" ;;
+		rsync)  PORT="22" ;;
 		*)    die "Unsupported protocol: $PROTOCOL (expected ftp|sftp|ssh)";;
 	esac
 fi

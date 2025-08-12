@@ -14,11 +14,12 @@
 
 SFTP() 
 {
-	# build lftp mirroring flags
-	lftp_flags
 
 	# prep the SSH envirment
 	init_ssh
+
+	# build lftp mirroring flags
+	mirror_flags
 
 	read -r -d '' LFTP_SCRIPT <<-EOF || true
 		set net:max-retries 5;
@@ -36,7 +37,7 @@ SFTP()
 	# execute the transfer
 	if [[ -n "$SSH_KEY_PATH" ]]; then
 		# key-based authentication
-		lftp -u "$USERNAME," -p "$PORT" "sftp://$SERVER" -e "set sftp:connect-program ${SSH_BIN[*]}; $LFTP_SCRIPT"
+		lftp -u "$USERNAME," -p "$PORT" "sftp://$SERVER" -e "set sftp:connect-program ${SSH_CMD[*]}; $LFTP_SCRIPT"
 	else
 		# password-based authentication
 		lftp -u "$USERNAME","$PASSWORD" -p "$PORT" "sftp://$SERVER" -e "$LFTP_SCRIPT"

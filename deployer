@@ -27,8 +27,12 @@ case "$PROTOCOL" in
 		SFTP
 	;;
 
+	rsync)
+		RSYNC
+	;;
+
 	*)
-		die "Unsupported protocol: $PROTOCOL (expected ftp|sftp|ssh)"
+		die "Unsupported protocol: $PROTOCOL (expected ftp|sftp|rsync|ssh)"
 	;;
 
 esac
