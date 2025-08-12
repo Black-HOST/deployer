@@ -60,7 +60,7 @@ inputs:
     default: "true"
     required: false
   exclude:
-    description: "Comma-separated exclude globs (e.g. .git,node_modules,*.log)"
+    description: "Comma or line separated exclude globs (e.g. .git,node_modules,*.log)"
     required: false
   dry_run:
     description: "Plan mode—don’t actually write changes"

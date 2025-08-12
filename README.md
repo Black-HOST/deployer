@@ -52,7 +52,7 @@ jobs:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-          remote-dir: "/public_html"
+          remote_dir: "/public_html"
 ```
 
 For more advanced usage, see the [`.github/workflows/`](.github/workflows/) folder in this repository.

@@ -82,7 +82,7 @@
 
 		# generate the exclude argguments
 		EXCLUDE_ARGS=()
-		for path in "${EXCLUDE_ARR[@]}"; do
-		  EXCLUDE_ARGS+=("$EXCLUDE_FLAG" "$path")
+		for pattern in "${EXCLUDE_ARR[@]}"; do
+		  EXCLUDE_ARGS+=("$EXCLUDE_FLAG" "$pattern")
 		done
 	}
