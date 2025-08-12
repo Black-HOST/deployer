@@ -51,10 +51,13 @@
 			# add the key to the SSH executable
 			SSH_CMD+=(-i "$SSH_KEY_PATH")
 
-			# handle password protected keys and password based authentication
-			if [[ -n "$PASSWORD" ]]; then
-				SSH_CMD=(sshpass -P 'pass' -p "$(printf '%q' "$PASSWORD")" "${SSH_CMD[@]}")
-			fi
+			# escape the password for SFPT mode
+			[[ $PROTOCOL == sftp ]] && PASSWORD=$(printf '%q' "$PASSWORD")
+		fi
+
+		# handle password protected keys and password based authentication
+		if [[ -n "$PASSWORD" ]]; then
+			SSH_CMD=(sshpass -v -P 'password' -p "$PASSWORD" "${SSH_CMD[@]}")
 		fi
 
 		# TOFU (Trust On First Use) by fetching the remote server public keys

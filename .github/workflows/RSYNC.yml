@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Password based SFTP deploy (not-recommended)
+      - name: Password based RSYNC deploy (not-recommended)
         uses: ./
         with:
           protocol: rsync
@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Authentication with passwordless SSH key
+      - name: RSYNC deployment with passwordless SSH key 
         uses: ./
         with:
           protocol: rsync
@@ -43,7 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Authentication with password protected SSH key
+      - name: RSYNC deployment with password protected SSH key
         uses: ./
         with:
           protocol: rsync
