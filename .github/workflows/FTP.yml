@@ -28,7 +28,10 @@ jobs:
           delete: "true"
           only_newer: "false"
           parallel: "2"
-          exclude: ".git,node_modules,*.log"
+          exclude: |
+            .env
+            .git/*
+            node_modules/
           dry_run: "false"
 
   # Test incremental file uploads over FTPS
