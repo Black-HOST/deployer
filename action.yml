@@ -1,4 +1,4 @@
-name: "Deployer"
+name: "Deployer 9000"
 description: "Deploy code via FTP/FTPS/SFTP (lftp), or SSH (rsync) and run pre/post deploy commands on remote servers"
 author: "BlackHOST"
 branding:
