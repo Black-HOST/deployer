@@ -78,6 +78,6 @@
 		# generate the exclude argguments
 		EXCLUDE_ARGS=()
 		for path in "${EXCLUDE_ARR[@]}"; do
-		  EXCLUDE_ARGS+=("$EXCLUDE_PREFIX" "$path")
+		  EXCLUDE_ARGS+=("$EXCLUDE_FLAG" "$path")
 		done
 	}
