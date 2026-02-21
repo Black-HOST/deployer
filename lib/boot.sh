@@ -67,6 +67,30 @@
 		ssh-keyscan -p "$PORT" -T 20 "$SERVER" >> "$KNOWN_HOSTS" 2>/dev/null || true
 	}
 
+	# run a command on the remote server
+	run_remote_command()
+	{
+		local SCRIPT="${1:-}"
+		local TYPE="${2:-}"
+
+		# skip if no script is provided
+		[[ -z "$SCRIPT" ]] && return
+
+		# pre/post scripts require SSH — not supported for ftp protocol
+		[[ "$PROTOCOL" == "ftp" ]] && { log "$TYPE skipped: SSH not available for ftp protocol"; return; }
+
+		# ensure SSH is initialized
+		[[ -z "${SSH_CMD:-}" ]] && init_ssh
+
+		log "Running $TYPE script"
+
+		if [[ "$DRY_RUN" == "true" ]]; then
+			echo "DRY RUN: '$SCRIPT' on $USERNAME@$SERVER over SSH"
+		else
+			"${SSH_CMD[@]}" "$USERNAME@$SERVER" "$REMOTE_SHELL" "$SCRIPT"
+		fi
+	}
+
 	# define deployment flags
 	mirror_flags() 
 	{

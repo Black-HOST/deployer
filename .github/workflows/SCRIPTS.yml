@@ -1,0 +1,50 @@
+name: PRE/POST Scripts
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  sftp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: SFTP pre/post with password auth
+        uses: ./
+        with:
+          protocol: sftp
+          server: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASS }}
+          local_dir: ".github/artifacts"
+          remote_dir: "public_html/scripts/sftp/test"
+          pre_script: |
+            mkdir -p "$HOME/public_html/scripts/sftp/test"
+            printf 'pre %s\n' "$(date -u +%FT%TZ)" > "$HOME/public_html/scripts/sftp/test/.pre"
+          post_script: |
+            test -f "$HOME/public_html/scripts/sftp/test/DEP-9000.md"
+            printf 'post %s\n' "$(date -u +%FT%TZ)" > "$HOME/public_html/scripts/sftp/test/.post"
+
+  rsync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: RSYNC pre/post with SSH key auth
+        uses: ./
+        with:
+          protocol: rsync
+          server: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
+          username: ${{ secrets.SFTP_USER }}
+          ssh_key: ${{ secrets.SFTP_OPEN_KEY }}
+          local_dir: ".github/artifacts"
+          remote_dir: "public_html/scripts/rsync/key"
+          pre_script: |
+            mkdir -p "$HOME/public_html/scripts/rsync/key"
+            printf 'pre %s\n' "$(date -u +%FT%TZ)" > "$HOME/public_html/scripts/rsync/key/.pre"
+          post_script: |
+            test -f "$HOME/public_html/scripts/rsync/key/DEP-9000.md"
+            printf 'post %s\n' "$(date -u +%FT%TZ)" > "$HOME/public_html/scripts/rsync/key/.post"

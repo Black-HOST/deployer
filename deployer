@@ -17,6 +17,8 @@ set -euo pipefail
 for f in /usr/share/deployer/*.sh; do source "$f"; done
 
 ## PROTOCOL ROUTER
+run_remote_command "${PRE_SCRIPT:-}" "pre-deploy"
+
 case "$PROTOCOL" in
 
 	ftp)	FTP;;
@@ -26,5 +28,8 @@ case "$PROTOCOL" in
 	*)		die "Unsupported protocol: $PROTOCOL (expected ftp|sftp|rsync|ssh)";;
 
 esac
+
+# execute post-deploy script
+run_remote_command "${POST_SCRIPT:-}" "post-deploy"
 
 ok "Yatta! The deployment has been complted."
