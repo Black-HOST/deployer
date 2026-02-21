@@ -21,6 +21,7 @@
 	log() { echo -e "\e[36m[DEPLOYER]\e[0m $*"; }
 	err() { echo -e "\e[31m[DEPLOYER]\e[0m Error: $*" >&2; }
 	die() { err "$@"; exit 1; }
+	shell_quote() { printf "'%s'" "${1//\'/\'\"\'\"\'}"; }
 
 	# cast config option into bool
 	to_bool()
@@ -87,7 +88,7 @@
 		if [[ "$DRY_RUN" == "true" ]]; then
 			echo "DRY RUN: '$SCRIPT' on $USERNAME@$SERVER over SSH"
 		else
-			"${SSH_CMD[@]}" "$USERNAME@$SERVER" "$REMOTE_SHELL" "$SCRIPT"
+			"${SSH_CMD[@]}" "$USERNAME@$SERVER" "$REMOTE_SHELL $(shell_quote "$SCRIPT")"
 		fi
 	}
 
