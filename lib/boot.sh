@@ -60,7 +60,7 @@
 			[[ $PROTOCOL == sftp ]] && PASSWORD=$(printf '%q' "$PASSWORD")
 
 			# add sshpass when password is provided (indicating there is some pass based auth)
-			SSH_CMD=(sshpass -v -P 'pass' -p "$PASSWORD" "${SSH_CMD[@]}")
+			SSH_CMD=(sshpass -P 'pass' -p "$PASSWORD" "${SSH_CMD[@]}")
 		fi
 
 		# TOFU (Trust On First Use) by fetching the remote server public keys
