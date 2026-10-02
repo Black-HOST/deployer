@@ -19,8 +19,10 @@ FTP()
 	# disable SSL verification
 	local SSL_VERIFY="yes"; [[ "$VERIFY_TLS" == "false" ]] && SSL_VERIFY="no"
 
-	# generate LFTP connection script 
+	# generate LFTP connection script
+	# fail-exit stops on the first error and `cd .` forces a login before mirroring: a --dry-run mirror never contacts the server on its own and exits 0
 	read -r -d '' LFTP_SCRIPT <<-EOF || true
+		set cmd:fail-exit yes;
 		set net:max-retries 5;
 		set net:reconnect-interval-base 5;
 		set net:timeout 30;
@@ -29,6 +31,7 @@ FTP()
 		set ftp:ssl-protect-data $SECURE;
 		set ssl:verify-certificate $SSL_VERIFY;
 		$EXTRA_LFTP
+		cd .;
 		mirror ${MIRROR_FLAGS[*]} ${EXCLUDE_ARGS[*]} $LOCAL_DIR $REMOTE_DIR;
 		bye
 	EOF
