@@ -2,7 +2,7 @@ FROM alpine:3.24
 
 # install dependencies lftp for FTP/SFTP, openssh-client + rsync for SSH deploy & scripts
 RUN apk add --no-cache \
-	lftp ca-certificates bash coreutils findutils grep sed \
+	lftp ca-certificates bash grep sed \
 	openssh-client rsync sshpass\
 	&& update-ca-certificates
 
@@ -18,4 +18,4 @@ COPY lib /usr/share/deployer
 RUN chmod +x /usr/bin/deployer
 
 ENV LFTP_HOME=/root/.lftp
-ENTRYPOINT ["/usr/bin/deployer"]
+CMD ["/usr/bin/deployer"]

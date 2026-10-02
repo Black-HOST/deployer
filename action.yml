@@ -80,3 +80,4 @@ outputs: {}
 runs:
   using: "docker"
   image: "Dockerfile"
+  entrypoint: "/usr/bin/deployer"
