@@ -23,6 +23,9 @@
 	die() { err "$@"; exit 1; }
 	shell_quote() { printf "'%s'" "${1//\'/\'\"\'\"\'}"; }
 
+	# read a config option: <NAME> wins, then INPUT_<NAME> (set by GitHub Actions), then the default
+	opt() { local i="INPUT_$1"; printf '%s' "${!1:-${!i:-${2:-}}}"; }
+
 	# cast config option into bool
 	to_bool()
 	{

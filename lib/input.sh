@@ -1,48 +1,49 @@
 #
 # ######################################################################################################################
 # DEPLOYER 9000 Input Module
-# 
-# DESCRIPTION: 	Fetches and validates the INPUT variables provided by GitHub actions
-# 
+#
+# DESCRIPTION: 	Fetches and validates the configuration options from the environment: <OPTION> (GitLab CI,
+#				docker run, compose) or INPUT_<OPTION> (set by GitHub Actions), the plain name wins.
+#
 # VERSION: 		1.0
-# DATE: 		2025-08-08 
+# DATE: 		2025-08-08
 # AUTHOR: 		Black HOST Ltd.
 # ######################################################################################################################
 #
 
-PROTOCOL="${INPUT_PROTOCOL:-ftp}"						# Define connection type ftp, sftp, ssh 
+PROTOCOL="$(opt PROTOCOL ftp)"							# Define connection type ftp, sftp, ssh
 
-SERVER="${INPUT_SERVER:?Hostname of IP is required}"	# Require hostname or IP
-PORT="${INPUT_PORT:-}"									# Set server connecting protocol 				default: NONE
+SERVER="$(opt SERVER)"									# Require hostname or IP
+PORT="$(opt PORT)"										# Set server connecting protocol 				default: NONE
 
 # AUTHENTICATION RELATED INPUTS
-USERNAME="${INPUT_USERNAME:?No user was specified}"		# User authentication
-PASSWORD="${INPUT_PASSWORD:-}"							
-SSH_KEY="${INPUT_SSH_KEY:-}"							# SSH key used for SFTP & RSYNC transfers
+USERNAME="$(opt USERNAME)"								# User authentication
+PASSWORD="$(opt PASSWORD)"
+SSH_KEY="$(opt SSH_KEY)"								# SSH key used for SFTP & RSYNC transfers
 
 # DIRECTORY DEFAULTS
-LOCAL_DIR="${INPUT_LOCAL_DIR:-.}"						# Set the local directory 						default: /app
-REMOTE_DIR="${INPUT_REMOTE_DIR:-/}"						# Set the remote upload directory 				default: / ( user home ) 
+LOCAL_DIR="$(opt LOCAL_DIR .)"							# Set the local directory 						default: /app
+REMOTE_DIR="$(opt REMOTE_DIR /)"						# Set the remote upload directory 				default: / ( user home )
 
 # FTP/LFTP CONFIG
-SECURE="$(to_bool "${INPUT_SECURE:-true}")"				# Switch between FTPS/FTP 						default: true (FTPS)
-VERIFY_TLS="$(to_bool "${INPUT_VERIFY_TLS:-true}")"		# Verify SSL certificate  						default: true
-PASSIVE="$(to_bool "${INPUT_PASSIVE:-true}")"			# Set FTP passive mode 							default: true
-PARALLEL="${INPUT_PARALLEL:-2}"							# Number of concurrent transfers 				default: 2
-EXTRA_LFTP="${INPUT_EXTRA_LFTP:-}"						# Extra LFTP config options						default: NONE		
+SECURE="$(to_bool "$(opt SECURE true)")"				# Switch between FTPS/FTP 						default: true (FTPS)
+VERIFY_TLS="$(to_bool "$(opt VERIFY_TLS true)")"		# Verify SSL certificate  						default: true
+PASSIVE="$(to_bool "$(opt PASSIVE true)")"				# Set FTP passive mode 							default: true
+PARALLEL="$(opt PARALLEL 2)"							# Number of concurrent transfers 				default: 2
+EXTRA_LFTP="$(opt EXTRA_LFTP)"							# Extra LFTP config options						default: NONE
 
 # DATA TRANSFER config
-DELETE="$(to_bool "${INPUT_DELETE:-false}")"			# Enable file deletes 							default: false
-ONLY_NEWER="$(to_bool "${INPUT_ONLY_NEWER:-true}")"		# SYNC only new files							default: false
-DRY_RUN="$(to_bool "${INPUT_DRY_RUN:-false}")"			# Perform a dry run only 						default: false
+DELETE="$(to_bool "$(opt DELETE false)")"				# Enable file deletes 							default: false
+ONLY_NEWER="$(to_bool "$(opt ONLY_NEWER false)")"		# SYNC only new files							default: false
+DRY_RUN="$(to_bool "$(opt DRY_RUN false)")"				# Perform a dry run only 						default: false
 
-# DEFAULT EXCLUDE LIST	
-EXCLUDE="${INPUT_EXCLUDE:-.*,.*/,node_modules/,*.log}"
+# DEFAULT EXCLUDE LIST
+EXCLUDE="$(opt EXCLUDE '.*,.*/,node_modules/,*.log')"
 
 # REMOTE COMMAND EXECUTION
-PRE_SCRIPT="${INPUT_PRE_SCRIPT:-}"						# Run a script prior to the transfers
-POST_SCRIPT="${INPUT_POST_SCRIPT:-}"					# Run a script after the transfers
-REMOTE_SHELL="${INPUT_REMOTE_SHELL:-/bin/bash -lc}"		# set the remote shell executor
+PRE_SCRIPT="$(opt PRE_SCRIPT)"							# Run a script prior to the transfers
+POST_SCRIPT="$(opt POST_SCRIPT)"						# Run a script after the transfers
+REMOTE_SHELL="$(opt REMOTE_SHELL '/bin/bash -lc')"		# set the remote shell executor
 
 
 #
