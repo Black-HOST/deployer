@@ -1,4 +1,4 @@
-FROM alpine:3.20
+FROM alpine:3.24
 
 # install dependencies lftp for FTP/SFTP, openssh-client + rsync for SSH deploy & scripts
 RUN apk add --no-cache \
