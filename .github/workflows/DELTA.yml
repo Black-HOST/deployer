@@ -21,7 +21,7 @@ jobs:
           username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASS }}
           local_dir: ".github/artifacts"
-          remote_dir: "public_html/DELTA/sftp"
+          remote_dir: "public_html/SFTP/delta"
           delta: "true"
 
   # Test delta uploads over FTPS
