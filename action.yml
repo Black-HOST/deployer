@@ -6,14 +6,14 @@ branding:
   color: "blue"
 inputs:
   protocol:
-    description: "ftp | sftp | ssh"
+    description: "ftp | sftp | rsync"
     required: false
     default: "ftp"
   server:
     description: "Remote host or IP"
     required: true
   port:
-    description: "Remote port. If omitted, defaults to 21 (ftp), 22 (sftp/ssh)"
+    description: "Remote port. If omitted, defaults to 21 (ftp), 22 (sftp/rsync)"
     required: false
   username:
     description: "Username (FTP/SFTP/SSH)"
@@ -57,7 +57,7 @@ inputs:
     required: false
   only_newer:
     description: "Upload only newer files"
-    default: "true"
+    default: "false"
     required: false
   exclude:
     description: "Comma or line separated exclude globs (e.g. .git,node_modules,*.log)"

@@ -98,9 +98,9 @@ Keep deploy settings inside the job. Project-wide variables with the same names 
 
 | Key Name         | Required | Example                      | Default Value | Description                                                   |
 |------------------|----------|------------------------------|---------------|---------------------------------------------------------------|
-| protocol         | No       | `sftp`                       | `ftp`         | Connection protocol. Supports `ftp`, `sftp`, or `ssh`.      |
+| protocol         | No       | `sftp`                       | `ftp`         | Connection protocol. Supports `ftp`, `sftp`, or `rsync`.    |
 | server           | Yes      | `example.com`                | —             | Hostname or IP address of the deployment server.            |
-| port             | No       | `22`                         | protocol default | Port for the chosen protocol (`21` for FTP, `22` for SFTP/SSH).|
+| port             | No       | `22`                         | protocol default | Port for the chosen protocol (`21` for FTP, `22` for SFTP/rsync).|
 | username         | Yes      | `deploy`                     | —             | Login username.                                             |
 | password         | No       | `superSecretPassword`        | —             | Login password (FTP/SFTP only).                             |
 | ssh_key  | No       | `<private-key>`              | —             | SSH private key for SFTP/SSH.                              |
@@ -111,11 +111,12 @@ Keep deploy settings inside the job. Project-wide variables with the same names 
 | passive          | No       | `true`                       | `true`        | FTP passive mode.                                           |
 | parallel         | No       | `2`                          | `2`           | Number of parallel file transfers.                          |
 | delete           | No       | `true`                       | `false`       | Remove remote files not present locally (sync mode).         |
-| only_newer       | No       | `true`                       | `true`        | Sync only files newer than remote files.                    |
-| exclude          | No       | `.git,node_modules,*.log`    | `.git,node_modules,*.log`             | Comma-separated list of file/directory patterns to exclude. |
+| only_newer       | No       | `true`                       | `false`       | Sync only files newer than remote files.                    |
+| exclude          | No       | `.git,node_modules,*.log`    | `.*,.*/,node_modules/,*.log`          | Comma-separated list of file/directory patterns to exclude. |
 | dry_run          | No       | `true`                       | `false`       | Run without making changes (test the deployment).           |
 | pre_script       | No       | `echo Pre deploy`            | —             | Shell script to run before transfer.                        |
 | post_script      | No       | `echo Post deploy`           | —             | Shell script to run after transfer.                         |
+| remote_shell     | No       | `/bin/sh -c`                 | `/bin/bash -lc` | Shell used to run the pre/post scripts on the server.     |
 
 ---
 
