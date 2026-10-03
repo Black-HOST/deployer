@@ -114,10 +114,33 @@ Keep deploy settings inside the job. Project-wide variables with the same names 
 | only_newer       | No       | `true`                       | `false`       | Sync only files newer than remote files.                    |
 | exclude          | No       | `.git,node_modules,*.log`    | `.*,.*/,node_modules/,*.log`          | Comma-separated list of file/directory patterns to exclude. |
 | include          | No       | `.htaccess,.user.ini`        | `.htaccess,.well-known/` | Comma-separated list of file/directory patterns to deploy even when excluded. |
+| preserve_times   | No       | `true`                       | `false`       | Deploy files with their git commit times. Enables [delta uploads](#️-preserve-times--delta-uploads) for FTP/SFTP. |
 | dry_run          | No       | `true`                       | `false`       | Run without making changes (test the deployment).           |
 | pre_script       | No       | `echo Pre deploy`            | —             | Shell script to run before transfer.                        |
 | post_script      | No       | `echo Post deploy`           | —             | Shell script to run after transfer.                         |
 | remote_shell     | No       | `/bin/sh -c`                 | `/bin/bash -lc` | Shell used to run the pre/post scripts on the server.     |
+
+---
+
+## ⏱️ Preserve times & delta uploads
+
+A CI job starts from a fresh checkout, so every file carries the time of the checkout, not the time it was last changed. With `preserve_times: true` the deployer sets every file tracked by git to the time of its last commit before the transfer.
+
+- **FTP / SFTP (delta uploads):** unchanged files have the same size and time as on the server, so only the files that changed are uploaded. Delta uploads are available only with `preserve_times` enabled; without it every deploy re-uploads all files.
+- **rsync:** rsync sends only the changes either way. With `preserve_times` it also skips unchanged files without reading them.
+- **All protocols:** the files on the server show the date of their last commit, not the date of the deploy.
+
+The commit times come from the git history. CI checkouts are shallow by default, so the deployer fetches the missing history on its own (commits only, no file contents). Files that are not tracked by git, such as build output, keep their current time and are transferred as before. If the directory is not a git checkout, the option is skipped and the deploy runs as usual.
+
+```yaml
+      - uses: Black-HOST/deployer@v1
+        with:
+          protocol: sftp
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          preserve_times: "true"
+```
 
 ---
 

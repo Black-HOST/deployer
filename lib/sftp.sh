@@ -21,8 +21,8 @@ SFTP()
 	# build lftp mirroring flags
 	mirror_flags
 
-	# delta mode: restore the commit times of the tracked files
-	delta_mtimes
+	# restore the commit times of the tracked files
+	preserve_times
 
 	# fail-exit stops on the first error and `cd .` forces a login before mirroring: a --dry-run mirror never contacts the server on its own and exits 0
 	read -r -d '' LFTP_SCRIPT <<-EOF || true

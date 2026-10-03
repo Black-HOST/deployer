@@ -16,8 +16,8 @@ FTP()
 	# build lftp mirroring & exclude flags
 	mirror_flags
 
-	# delta mode: restore the commit times of the tracked files
-	delta_mtimes
+	# restore the commit times of the tracked files
+	preserve_times
 
 	# disable SSL verification
 	local SSL_VERIFY="yes"; [[ "$VERIFY_TLS" == "false" ]] && SSL_VERIFY="no"

@@ -20,6 +20,9 @@ RSYNC()
 	# build rsync mirroring flags
 	mirror_flags rsync
 
+	# restore the commit times of the tracked files
+	preserve_times
+
 	log "RSYNC/SSH -> $SERVER:$PORT (delete=$DELETE, dry-run=$DRY_RUN, local_dir=$LOCAL_DIR, remote_dir=$REMOTE_DIR"
 
 	rsync "${MIRROR_FLAGS[@]}" "${INCLUDE_ARGS[@]}" "${EXCLUDE_ARGS[@]}" -e "${SSH_CMD[*]}" "$LOCAL_DIR"/ "$USERNAME@$SERVER:$REMOTE_DIR"/

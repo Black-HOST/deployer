@@ -6,7 +6,7 @@ on:
 
 jobs:
 
-  # Test delta uploads over SFTP, the default shallow checkout makes the deployer fetch the git history itself
+  # Test delta uploads over SFTP (preserve_times), the default shallow checkout makes the deployer fetch the git history itself
   sftp:
     runs-on: ubuntu-latest
     steps:
@@ -22,9 +22,9 @@ jobs:
           password: ${{ secrets.SFTP_PASS }}
           local_dir: ".github/artifacts"
           remote_dir: "public_html/SFTP/delta"
-          delta: "true"
+          preserve_times: "true"
 
-  # Test delta uploads over FTPS
+  # Test delta uploads over FTPS (preserve_times)
   ftp:
     runs-on: ubuntu-latest
     steps:
@@ -39,4 +39,4 @@ jobs:
           local_dir: ".github/artifacts"
           remote_dir: "/public_html/FTP/delta"
           secure: "true"
-          delta: "true"
+          preserve_times: "true"

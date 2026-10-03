@@ -65,8 +65,8 @@ inputs:
   include:
     description: "Comma or line separated include globs, deployed even when excluded (e.g. .htaccess,.well-known/)"
     required: false
-  delta:
-    description: "FTP/SFTP: upload only the files that changed, based on the git history of the checkout. true|false"
+  preserve_times:
+    description: "Deploy files with their git commit times. FTP/SFTP then upload only the files that changed. true|false"
     default: "false"
     required: false
   dry_run:
