@@ -1,0 +1,42 @@
+name: DELTA
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+
+  # Test delta uploads over SFTP, the default shallow checkout makes the deployer fetch the git history itself
+  sftp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Delta upload over SFTP
+        uses: ./
+        with:
+          protocol: sftp
+          server: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
+          username: ${{ secrets.SFTP_USER }}
+          password: ${{ secrets.SFTP_PASS }}
+          local_dir: ".github/artifacts"
+          remote_dir: "public_html/DELTA/sftp"
+          delta: "true"
+
+  # Test delta uploads over FTPS
+  ftp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Delta upload over FTPS
+        uses: ./
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local_dir: ".github/artifacts"
+          remote_dir: "/public_html/FTP/delta"
+          secure: "true"
+          delta: "true"

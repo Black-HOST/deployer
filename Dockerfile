@@ -3,7 +3,7 @@ FROM alpine:3.24
 # install dependencies lftp for FTP/SFTP, openssh-client + rsync for SSH deploy & scripts
 RUN apk add --no-cache \
 	lftp ca-certificates bash grep sed \
-	openssh-client rsync sshpass\
+	openssh-client rsync sshpass git\
 	&& update-ca-certificates
 
 # create the .ssh dir

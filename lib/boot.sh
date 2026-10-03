@@ -121,3 +121,23 @@
 		  INCLUDE_ARGS+=("$INCLUDE_FLAG$pattern")
 		done
 	}
+
+	# delta mode: give every tracked file the time of its last commit, so lftp skips the files that did not change
+	delta_mtimes()
+	{
+		[[ "$DELTA" == "true" ]] || return 0
+
+		# the container runs as root on a checkout owned by the CI user
+		git config --global --add safe.directory '*'
+
+		git -C "$LOCAL_DIR" rev-parse --git-dir >/dev/null 2>&1 || { log "delta skipped: $LOCAL_DIR is not a git checkout"; return 0; }
+
+		# CI checkouts are shallow: fetch the missing history, commits and trees only
+		if [[ "$(git -C "$LOCAL_DIR" rev-parse --is-shallow-repository)" == "true" ]]; then
+			git -C "$LOCAL_DIR" fetch --quiet --no-tags --unshallow --filter=blob:none || { log "delta skipped: unable to fetch the git history"; return 0; }
+		fi
+
+		git -C "$LOCAL_DIR" ls-files -z | while IFS= read -r -d '' file; do
+		  touch -d "@$(git -C "$LOCAL_DIR" log -1 --format=%ct -- "$file")" "$LOCAL_DIR/$file"
+		done
+	}
