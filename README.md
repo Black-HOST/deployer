@@ -120,6 +120,21 @@ Keep deploy settings inside the job. Project-wide variables with the same names 
 
 ---
 
+## 🏷️ Versioning
+
+Every release is published under the same four references, as a GitHub Action and as a Docker image:
+
+| GitHub Action                | Docker image                | Meaning                               |
+|------------------------------|-----------------------------|---------------------------------------|
+| `Black-HOST/deployer@v1.2.1` | `blackhost/deployer:1.2.1`  | exact release                         |
+| `Black-HOST/deployer@v1.2`   | `blackhost/deployer:1.2`    | latest 1.2.x                          |
+| `Black-HOST/deployer@v1`     | `blackhost/deployer:1`      | latest 1.x, recommended for pipelines |
+| `Black-HOST/deployer@latest` | `blackhost/deployer:latest` | newest release                        |
+
+`v1` receives every 1.x release, while `latest` also moves on to the next major version. Pin the exact release to decide for yourself when to update.
+
+---
+
 ## ⚠️ Disclaimer
 This software is provided "as is" without warranty of any kind, express or implied. While it has been tested extensively, you should use it at your own risk.
 

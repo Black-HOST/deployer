@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
@@ -54,3 +54,10 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      # v1.2.3 -> v1.2, v1, latest  (git tags, so deployer@v1 follows the release; pre-releases move nothing, same as the image tags)
+      # GitHub rejects the push when the workflows in the release commit differ from the tip of master
+      - name: Move the floating git tags
+        run: |
+          [[ "$GITHUB_REF_NAME" =~ ^v([0-9]+)\.([0-9]+)\.[0-9]+$ ]] || { echo "$GITHUB_REF_NAME is not a vX.Y.Z release, git tags left as they are"; exit 0; }
+          git push --force origin "$GITHUB_SHA:refs/tags/v${BASH_REMATCH[1]}.${BASH_REMATCH[2]}" "$GITHUB_SHA:refs/tags/v${BASH_REMATCH[1]}" "$GITHUB_SHA:refs/tags/latest"
