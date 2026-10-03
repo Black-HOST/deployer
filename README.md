@@ -60,6 +60,40 @@ For more advanced usage, see the [`.github/workflows/`](.github/workflows/) fold
 
 ---
 
+## 🦊 Quick start: GitLab CI
+
+The same image is published on Docker Hub as [`blackhost/deployer`](https://hub.docker.com/r/blackhost/deployer), so a GitLab job needs nothing but the image and its variables:
+
+```yaml
+deploy:
+  image: blackhost/deployer:1
+  stage: deploy
+  script: [deployer]
+  variables:
+    PROTOCOL: sftp
+    SERVER: example.com
+    REMOTE_DIR: public_html
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+```
+
+Add `USERNAME` and `PASSWORD` (or `SSH_KEY`) as **masked** CI/CD variables in *Settings → CI/CD → Variables*. The job runs inside your checked-out repository, so `LOCAL_DIR` defaults to the project root.
+
+Every key from the [Configuration](#️-configuration) table works as a variable, written in uppercase: `remote_dir` becomes `REMOTE_DIR`.
+
+Two jobs for two targets is just two `variables:` blocks:
+
+```yaml
+deploy-api:
+  extends: deploy
+  variables: { SERVER: api.example.com, PASSWORD: $API_DEPLOY_PASS }
+  rules: [{ if: $CI_COMMIT_BRANCH == "api" }]
+```
+
+Keep deploy settings inside the job. Project-wide variables with the same names (`PORT`, `DRY_RUN`, `DELETE`, `PARALLEL`) are picked up too.
+
+---
+
 ## ⚙️ Configuration
 
 | Key Name         | Required | Example                      | Default Value | Description                                                   |
