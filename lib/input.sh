@@ -40,7 +40,7 @@ PRESERVE_TIMES="$(to_bool "$(opt PRESERVE_TIMES false)")"	# Deploy files with th
 
 # DEFAULT EXCLUDE LIST
 EXCLUDE="$(opt EXCLUDE '.*,.*/,node_modules/,*.log')"
-INCLUDE="$(opt INCLUDE '.htaccess,.well-known/')"		# Deploy even when excluded
+INCLUDE="$(opt INCLUDE)"									# Deploy even when excluded					default: NONE
 
 # REMOTE COMMAND EXECUTION
 PRE_SCRIPT="$(opt PRE_SCRIPT)"							# Run a script prior to the transfers

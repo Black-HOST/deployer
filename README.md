@@ -113,12 +113,26 @@ Keep deploy settings inside the job. Project-wide variables with the same names 
 | delete           | No       | `true`                       | `false`       | Remove remote files not present locally (sync mode).         |
 | only_newer       | No       | `true`                       | `false`       | Sync only files newer than remote files.                    |
 | exclude          | No       | `.git,node_modules,*.log`    | `.*,.*/,node_modules/,*.log`          | Comma-separated list of file/directory patterns to exclude. |
-| include          | No       | `.htaccess,.user.ini`        | `.htaccess,.well-known/` | Comma-separated list of file/directory patterns to deploy even when excluded. |
+| include          | No       | `.htaccess,.well-known/`     | —             | Comma-separated list of file/directory patterns to deploy even when excluded, see [Dotfiles](#-dotfiles). |
 | preserve_times   | No       | `true`                       | `false`       | Deploy files with their git commit times. Enables [delta uploads](#️-preserve-times--delta-uploads) for FTP/SFTP. |
 | dry_run          | No       | `true`                       | `false`       | Run without making changes (test the deployment).           |
 | pre_script       | No       | `echo Pre deploy`            | —             | Shell script to run before transfer.                        |
 | post_script      | No       | `echo Post deploy`           | —             | Shell script to run after transfer.                         |
 | remote_shell     | No       | `/bin/sh -c`                 | `/bin/bash -lc` | Shell used to run the pre/post scripts on the server.     |
+
+---
+
+## 🔒 Dotfiles
+
+All dotfiles and dot-directories (`.env`, `.git/`, `.htaccess`, ...) are excluded by default. They often hold credentials or repository metadata that should never reach a web server.
+
+To deploy one, list it in `include`. A directory needs a trailing slash:
+
+```yaml
+          include: ".htaccess,.well-known/"
+```
+
+An included file is synced like any other file: with `delete: true` it is also removed from the server when it does not exist in your local directory. Dotfiles that are not included are never uploaded and never deleted.
 
 ---
 
