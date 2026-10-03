@@ -39,6 +39,7 @@ DRY_RUN="$(to_bool "$(opt DRY_RUN false)")"				# Perform a dry run only 						de
 
 # DEFAULT EXCLUDE LIST
 EXCLUDE="$(opt EXCLUDE '.*,.*/,node_modules/,*.log')"
+INCLUDE="$(opt INCLUDE '.htaccess,.well-known/')"		# Deploy even when excluded
 
 # REMOTE COMMAND EXECUTION
 PRE_SCRIPT="$(opt PRE_SCRIPT)"							# Run a script prior to the transfers
@@ -67,5 +68,6 @@ fi
 LOCAL_DIR="${LOCAL_DIR%/}"
 REMOTE_DIR="${REMOTE_DIR%/}"
 
-# convert excludes into an array
+# convert excludes and includes into arrays
+mapfile -t INCLUDE_ARR < <(echo "$INCLUDE" | sed -e 's/[ \t]*,[ \t]*/\n/g' | sed '/^$/d')
 mapfile -t EXCLUDE_ARR < <(echo "$EXCLUDE" | sed -e 's/[ \t]*,[ \t]*/\n/g' | sed '/^$/d')

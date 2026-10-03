@@ -113,6 +113,7 @@ Keep deploy settings inside the job. Project-wide variables with the same names 
 | delete           | No       | `true`                       | `false`       | Remove remote files not present locally (sync mode).         |
 | only_newer       | No       | `true`                       | `false`       | Sync only files newer than remote files.                    |
 | exclude          | No       | `.git,node_modules,*.log`    | `.*,.*/,node_modules/,*.log`          | Comma-separated list of file/directory patterns to exclude. |
+| include          | No       | `.htaccess,.user.ini`        | `.htaccess,.well-known/` | Comma-separated list of file/directory patterns to deploy even when excluded. |
 | dry_run          | No       | `true`                       | `false`       | Run without making changes (test the deployment).           |
 | pre_script       | No       | `echo Pre deploy`            | —             | Shell script to run before transfer.                        |
 | post_script      | No       | `echo Post deploy`           | —             | Shell script to run after transfer.                         |

@@ -22,5 +22,5 @@ RSYNC()
 
 	log "RSYNC/SSH -> $SERVER:$PORT (delete=$DELETE, dry-run=$DRY_RUN, local_dir=$LOCAL_DIR, remote_dir=$REMOTE_DIR"
 
-	rsync "${MIRROR_FLAGS[@]}" "${EXCLUDE_ARGS[@]}" -e "${SSH_CMD[*]}" "$LOCAL_DIR"/ "$USERNAME@$SERVER:$REMOTE_DIR"/
+	rsync "${MIRROR_FLAGS[@]}" "${INCLUDE_ARGS[@]}" "${EXCLUDE_ARGS[@]}" -e "${SSH_CMD[*]}" "$LOCAL_DIR"/ "$USERNAME@$SERVER:$REMOTE_DIR"/
 }

@@ -62,6 +62,9 @@ inputs:
   exclude:
     description: "Comma or line separated exclude globs (e.g. .git,node_modules,*.log)"
     required: false
+  include:
+    description: "Comma or line separated include globs, deployed even when excluded (e.g. .htaccess,.well-known/)"
+    required: false
   dry_run:
     description: "Plan mode—don’t actually write changes"
     default: "false"

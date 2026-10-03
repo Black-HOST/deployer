@@ -32,7 +32,7 @@ FTP()
 		set ssl:verify-certificate $SSL_VERIFY;
 		$EXTRA_LFTP
 		cd .;
-		mirror ${MIRROR_FLAGS[*]} ${EXCLUDE_ARGS[*]} $LOCAL_DIR $REMOTE_DIR;
+		mirror ${MIRROR_FLAGS[*]} ${EXCLUDE_ARGS[*]} ${INCLUDE_ARGS[*]} $LOCAL_DIR $REMOTE_DIR;
 		bye
 	EOF
 

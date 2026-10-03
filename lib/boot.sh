@@ -101,8 +101,8 @@
 
 		# set dynamic flags values based on sync tool
 		[[ ${1:-} == rsync ]] \
-			&& { EXCLUDE_FLAG=--exclude=;     UPDATE_FLAG=--update;     MIRROR_FLAGS=(-az --human-readable --info=STATS2,PROGRESS2); } \
-			|| { EXCLUDE_FLAG="--exclude-glob "; UPDATE_FLAG=--only-newer; MIRROR_FLAGS=(-R --verbose --parallel="$PARALLEL"); }
+			&& { EXCLUDE_FLAG=--exclude=;     INCLUDE_FLAG=--include=;     UPDATE_FLAG=--update;     MIRROR_FLAGS=(-az --human-readable --info=STATS2,PROGRESS2); } \
+			|| { EXCLUDE_FLAG="--exclude-glob "; INCLUDE_FLAG="--include-glob "; UPDATE_FLAG=--only-newer; MIRROR_FLAGS=(-R --verbose --parallel="$PARALLEL"); }
 
 		# set miroring flafgs 
 		[[ "$DELETE" == "true" ]]    && MIRROR_FLAGS+=(--delete)
@@ -113,5 +113,11 @@
 		EXCLUDE_ARGS=()
 		for pattern in "${EXCLUDE_ARR[@]}"; do
 		  EXCLUDE_ARGS+=("$EXCLUDE_FLAG$pattern")
+		done
+
+		# generate the include arguments (rsync wants them before the excludes, lftp after)
+		INCLUDE_ARGS=()
+		for pattern in "${INCLUDE_ARR[@]}"; do
+		  INCLUDE_ARGS+=("$INCLUDE_FLAG$pattern")
 		done
 	}
