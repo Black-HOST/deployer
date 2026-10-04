@@ -66,8 +66,17 @@
 			SSH_CMD=(sshpass -P 'pass' -e "${SSH_CMD[@]}")
 		fi
 
-		# TOFU (Trust On First Use) by fetching the remote server public keys
-		ssh-keyscan -p "$PORT" -T 20 "$SERVER" >> "$KNOWN_HOSTS" 2>/dev/null || true
+		if [[ -n "$HOST_KEY" ]]; then
+
+			# pinned: trust only the given public key(s), one "type key" per line
+			local HOST="$SERVER"; [[ "$PORT" != 22 ]] && HOST="[$SERVER]:$PORT"
+			while IFS= read -r KEY; do [[ -n "$KEY" ]] && echo "$HOST $KEY"; done <<< "$HOST_KEY" > "$KNOWN_HOSTS"
+			SSH_CMD+=(-o StrictHostKeyChecking=yes)
+		else
+
+			# TOFU (Trust On First Use) by fetching the remote server public keys
+			ssh-keyscan -p "$PORT" -T 20 "$SERVER" >> "$KNOWN_HOSTS" 2>/dev/null || true
+		fi
 	}
 
 	# run a command on the remote server

@@ -20,6 +20,7 @@ PORT="$(opt PORT)"										# Set server connecting protocol 				default: NONE
 USERNAME="$(opt USERNAME)"								# User authentication
 PASSWORD="$(opt PASSWORD)"
 SSH_KEY="$(opt SSH_KEY)"								# SSH key used for SFTP & RSYNC transfers
+HOST_KEY="$(opt HOST_KEY)"								# Pinned SSH host key(s) of the server			default: NONE
 
 # DIRECTORY DEFAULTS
 LOCAL_DIR="$(opt LOCAL_DIR .)"							# Set the local directory 						default: /app

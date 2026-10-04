@@ -54,3 +54,45 @@ jobs:
           ssh_key: ${{ secrets.SFTP_KEY }}
           local_dir: ".github/artifacts"
           remote_dir: "public_html/RSYNC/protected"
+
+  # the deploy must go through with the pinned host key of the server
+  pinned:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: RSYNC deployment with a pinned SSH host key
+        uses: ./
+        with:
+          protocol: rsync
+          server: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
+          username: ${{ secrets.SFTP_USER }}
+          ssh_key: ${{ secrets.SFTP_OPEN_KEY }}
+          host_key: ${{ secrets.HOST_KEY }}
+          local_dir: ".github/artifacts"
+          remote_dir: "public_html/RSYNC/pinned"
+
+  # the deploy must be refused when the server presents another host key than the pinned one
+  refused:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: RSYNC deployment with a wrong pinned SSH host key
+        id: deploy
+        continue-on-error: true
+        uses: ./
+        with:
+          protocol: rsync
+          server: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
+          username: ${{ secrets.SFTP_USER }}
+          ssh_key: ${{ secrets.SFTP_OPEN_KEY }}
+          host_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGb9ECWmP6e8rSXcc5L6cZy2mA3e0Y3j0yJ3cJ0V8d7x"
+          local_dir: ".github/artifacts"
+          remote_dir: "public_html/RSYNC/refused"
+
+      - name: Fail when the deployment went through
+        if: steps.deploy.outcome != 'failure'
+        run: echo "The deployment was not refused" && exit 1

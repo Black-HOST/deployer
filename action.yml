@@ -24,6 +24,9 @@ inputs:
   ssh_key:
     description: "PEM-encoded private key for SFTP/SSH"
     required: false
+  host_key:
+    description: "Public SSH host key of the server (e.g. ssh-ed25519 AAAA...), one per line. When set, any other host key is refused"
+    required: false
   local_dir:
     description: "Local directory to upload (relative to GITHUB_WORKSPACE)"
     default: "."

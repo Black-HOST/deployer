@@ -104,6 +104,7 @@ Keep deploy settings inside the job. Project-wide variables with the same names 
 | username         | Yes      | `deploy`                     | —             | Login username.                                             |
 | password         | No       | `superSecretPassword`        | —             | Login password (FTP/SFTP only).                             |
 | ssh_key  | No       | `<private-key>`              | —             | SSH private key for SFTP/SSH.                              |
+| host_key         | No       | `ssh-ed25519 AAAA...`        | —             | Public SSH host key of the server (SFTP/rsync). When set, the deploy fails if the server presents any other key. |
 | local_dir        | No       | `dist`                       | `.`           | Local directory to upload.                                  |
 | remote_dir       | No       | `/public_html`               | `/`           | Remote directory on the server.                             |
 | secure           | No       | `true`                       | `true`        | Use FTPS (FTP over TLS).                                    |

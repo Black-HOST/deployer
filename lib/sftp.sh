@@ -30,7 +30,7 @@ SFTP()
 		set net:max-retries 5;
 		set net:reconnect-interval-base 5;
 		set net:timeout 30;
-		set sftp:auto-confirm yes;
+		set sftp:auto-confirm $([[ -n "$HOST_KEY" ]] && echo no || echo yes);
 		$EXTRA_LFTP
 		cd .;
 		mirror ${MIRROR_FLAGS[*]} ${EXCLUDE_ARGS[*]} ${INCLUDE_ARGS[*]} $LOCAL_DIR $REMOTE_DIR;

@@ -54,3 +54,21 @@ jobs:
           ssh_key: ${{ secrets.SFTP_KEY }}
           local_dir: ".github/artifacts"
           remote_dir: "public_html/SFTP/protected"
+
+  # the deploy must go through with the pinned host key of the server
+  pinned:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: SFTP deploy with a pinned SSH host key
+        uses: ./
+        with:
+          protocol: sftp
+          server: ${{ secrets.SFTP_HOST }}
+          port: ${{ secrets.SFTP_PORT }}
+          username: ${{ secrets.SFTP_USER }}
+          ssh_key: ${{ secrets.SFTP_OPEN_KEY }}
+          host_key: ${{ secrets.HOST_KEY }}
+          local_dir: ".github/artifacts"
+          remote_dir: "public_html/SFTP/pinned"
