@@ -43,5 +43,5 @@ FTP()
 	log "FTP$([[ "$SECURE" == "true" ]] && echo 'S') -> $SERVER:$PORT (delete=$DELETE, dry-run=$DRY_RUN, parallel=$PARALLEL, local=$LOCAL_DIR, remote=$REMOTE_DIR)"
 	
 	# execute the transfer
-	lftp -u "$USERNAME","$PASSWORD" -p "$PORT" "$SERVER" -e "$LFTP_SCRIPT"
+	LFTP_PASSWORD="$PASSWORD" lftp --env-password -u "$USERNAME" -p "$PORT" "$SERVER" -e "$LFTP_SCRIPT"
 }

@@ -46,6 +46,6 @@ SFTP()
 		lftp -u "$USERNAME," -p "$PORT" "sftp://$SERVER" -e "set sftp:connect-program ${SSH_CMD[*]}; $LFTP_SCRIPT"
 	else
 		# password-based authentication
-		lftp -u "$USERNAME","$PASSWORD" -p "$PORT" "sftp://$SERVER" -e "$LFTP_SCRIPT"
+		LFTP_PASSWORD="$PASSWORD" lftp --env-password -u "$USERNAME" -p "$PORT" "sftp://$SERVER" -e "$LFTP_SCRIPT"
 	fi
 }

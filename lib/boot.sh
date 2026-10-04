@@ -60,11 +60,10 @@
 		# handle password protected keys and password based authentication
 		if [[ -n "$PASSWORD" ]]; then
 
-			# escape the password for SFPT mode
-			[[ $PROTOCOL == sftp ]] && PASSWORD=$(printf '%q' "$PASSWORD")
-
 			# add sshpass when password is provided (indicating there is some pass based auth)
-			SSH_CMD=(sshpass -P 'pass' -p "$PASSWORD" "${SSH_CMD[@]}")
+			# the password travels in the environment (SSHPASS), never on a command line
+			export SSHPASS="$PASSWORD"
+			SSH_CMD=(sshpass -P 'pass' -e "${SSH_CMD[@]}")
 		fi
 
 		# TOFU (Trust On First Use) by fetching the remote server public keys
