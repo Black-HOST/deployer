@@ -104,7 +104,7 @@ Keep deploy settings inside the job. Project-wide variables with the same names 
 | username         | Yes      | `deploy`                     | —             | Login username.                                             |
 | password         | No       | `superSecretPassword`        | —             | Login password (FTP/SFTP only).                             |
 | ssh_key  | No       | `<private-key>`              | —             | SSH private key for SFTP/SSH.                              |
-| host_key         | No       | `ssh-ed25519 AAAA...`        | —             | Public SSH host key of the server (SFTP/rsync). When set, the deploy fails if the server presents any other key. |
+| host_key         | No       | `ssh-ed25519 AAAA...`        | —             | Public SSH host key of the server (SFTP/rsync). When set, the deploy fails if the server presents any other key, see [SSH host key verification](#-ssh-host-key-verification). |
 | local_dir        | No       | `dist`                       | `.`           | Local directory to upload.                                  |
 | remote_dir       | No       | `/public_html`               | `/`           | Remote directory on the server.                             |
 | secure           | No       | `true`                       | `true`        | Use FTPS (FTP over TLS).                                    |
@@ -135,6 +135,42 @@ To deploy one, list it in `include`. A directory needs a trailing slash:
 ```
 
 An included file is synced like any other file: with `delete: true` it is also removed from the server when it does not exist in your local directory. Dotfiles that are not included are never uploaded and never deleted.
+
+---
+
+## 🔑 SSH host key verification
+
+By default the deployer asks the server for its SSH host key on every run and trusts the answer. That is convenient, but it cannot tell your server from one that only pretends to be it.
+
+Set `host_key` to the public host key of your server and the deployer trusts that key only. This protects the deployment from man-in-the-middle attacks, especially on shared runners. If the server presents any other key, the connection is refused before any credentials or files are sent, and the job fails.
+
+```yaml
+      - uses: Black-HOST/deployer@v1
+        with:
+          protocol: sftp
+          server: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USER }}
+          ssh_key: ${{ secrets.SFTP_KEY }}
+          host_key: ${{ secrets.HOST_KEY }}
+```
+
+Get the key once, from a network you trust:
+
+```bash
+ssh-keyscan -t ed25519 example.com
+# example.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI...
+```
+
+Use the key type and the key, without the host name in front: `host_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI..."`. It is a public key, so it does not have to be stored as a secret.
+
+- Applies to SFTP, rsync and the pre/post scripts. FTP has no host keys; FTPS verifies the TLS certificate of the server instead.
+- Several keys can be given, one per line. Add the new key before you re-key a server and deploys keep working during the change.
+
+```yaml
+          host_key: |
+            ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI...
+            ssh-rsa AAAAB3NzaC1yc2EAAAADAQAB...
+```
 
 ---
 
