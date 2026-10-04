@@ -63,7 +63,7 @@ inputs:
     default: "false"
     required: false
   exclude:
-    description: "Comma or line separated exclude globs (e.g. .git,node_modules,*.log)"
+    description: "Comma or line separated exclude globs (e.g. .git/,node_modules/,*.log), a directory needs a trailing slash"
     required: false
   include:
     description: "Comma or line separated include globs, deployed even when excluded (e.g. .htaccess,.well-known/)"

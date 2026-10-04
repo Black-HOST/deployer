@@ -29,6 +29,7 @@ FTP()
 		set net:max-retries 5;
 		set net:reconnect-interval-base 5;
 		set net:timeout 30;
+		set xfer:use-temp-file yes;
 		set ftp:passive-mode $PASSIVE;
 		set ftp:ssl-force $SECURE;
 		set ftp:ssl-protect-data $SECURE;

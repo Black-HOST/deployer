@@ -30,6 +30,7 @@ SFTP()
 		set net:max-retries 5;
 		set net:reconnect-interval-base 5;
 		set net:timeout 30;
+		set xfer:use-temp-file yes;
 		set sftp:auto-confirm $([[ -n "$HOST_KEY" ]] && echo no || echo yes);
 		$EXTRA_LFTP
 		cd .;
