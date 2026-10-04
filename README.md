@@ -202,8 +202,8 @@ Every release is published under the same four references, as a GitHub Action an
 
 | GitHub Action                | Docker image                | Meaning                               |
 |------------------------------|-----------------------------|---------------------------------------|
-| `Black-HOST/deployer@v1.2.1` | `blackhost/deployer:1.2.1`  | exact release                         |
-| `Black-HOST/deployer@v1.2`   | `blackhost/deployer:1.2`    | latest 1.2.x                          |
+| `Black-HOST/deployer@v1.3.0` | `blackhost/deployer:1.3.0`  | exact release                         |
+| `Black-HOST/deployer@v1.3`   | `blackhost/deployer:1.3`    | latest 1.3.x                          |
 | `Black-HOST/deployer@v1`     | `blackhost/deployer:1`      | latest 1.x, recommended for pipelines |
 | `Black-HOST/deployer@latest` | `blackhost/deployer:latest` | newest release                        |
 
