@@ -37,6 +37,7 @@ DELETE="$(to_bool "$(opt DELETE false)")"				# Enable file deletes 							defaul
 ONLY_NEWER="$(to_bool "$(opt ONLY_NEWER false)")"		# SYNC only new files							default: false
 DRY_RUN="$(to_bool "$(opt DRY_RUN false)")"				# Perform a dry run only 						default: false
 PRESERVE_TIMES="$(to_bool "$(opt PRESERVE_TIMES false)")"	# Deploy files with their git commit times		default: false
+SAFEGUARDS="$(to_bool "$(opt SAFEGUARDS true)")"			# Refuse deploys that would wipe the target		default: true
 
 # DEFAULT EXCLUDE LIST
 EXCLUDE="$(opt EXCLUDE '.*,.*/,node_modules/,*.log')"

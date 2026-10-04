@@ -141,3 +141,15 @@
 		  touch -d "@$(git -C "$LOCAL_DIR" log -1 --format=%ct -- "$file")" "$LOCAL_DIR/$file"
 		done
 	}
+
+	# refuse a deploy that would wipe the target: delete is enabled and there is nothing to deploy
+	safeguards()
+	{
+		[[ -d "$LOCAL_DIR" ]] || die "Local directory not found: $LOCAL_DIR"
+		[[ "$SAFEGUARDS" == "true" && "$DELETE" == "true" && "$DRY_RUN" != "true" ]] || return 0
+
+		# count the files that are left after the include and exclude lists
+		mirror_flags rsync
+		(( $(rsync -a --list-only "${INCLUDE_ARGS[@]}" "${EXCLUDE_ARGS[@]}" "$LOCAL_DIR"/ | grep -c '^[-l]') > 0 )) \
+			|| die "Nothing to deploy from $LOCAL_DIR and delete is enabled: this would remove every file in $REMOTE_DIR. Set safeguards to false to allow it."
+	}

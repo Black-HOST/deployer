@@ -16,6 +16,9 @@ set -euo pipefail
 # load all submodules
 for f in /usr/share/deployer/*.sh; do source "$f"; done
 
+# stop before a deploy that would wipe the target
+safeguards
+
 ## PROTOCOL ROUTER
 run_remote_command "${PRE_SCRIPT:-}" "pre-deploy"
 

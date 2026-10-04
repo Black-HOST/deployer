@@ -65,6 +65,10 @@ inputs:
   include:
     description: "Comma or line separated include globs, deployed even when excluded (e.g. .htaccess,.well-known/)"
     required: false
+  safeguards:
+    description: "Refuse to deploy when delete is enabled and there is nothing to deploy (it would wipe the target). true|false"
+    default: "true"
+    required: false
   preserve_times:
     description: "Deploy files with their git commit times. FTP/SFTP then upload only the files that changed. true|false"
     default: "false"

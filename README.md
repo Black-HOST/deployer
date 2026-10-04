@@ -112,9 +112,10 @@ Keep deploy settings inside the job. Project-wide variables with the same names 
 | parallel         | No       | `2`                          | `2`           | Number of parallel file transfers.                          |
 | delete           | No       | `true`                       | `false`       | Remove remote files not present locally (sync mode).         |
 | only_newer       | No       | `true`                       | `false`       | Sync only files newer than remote files.                    |
-| exclude          | No       | `.git,node_modules,*.log`    | `.*,.*/,node_modules/,*.log`          | Comma-separated list of file/directory patterns to exclude. |
+| exclude          | No       | `.git/,node_modules,*.log`    | `.*,.*/,node_modules/,*.log`          | Comma-separated list of file/directory patterns to exclude. |
 | include          | No       | `.htaccess,.well-known/`     | —             | Comma-separated list of file/directory patterns to deploy even when excluded, see [Dotfiles](#-dotfiles). |
 | preserve_times   | No       | `true`                       | `false`       | Deploy files with their git commit times. Enables [delta uploads](#️-preserve-times--delta-uploads) for FTP/SFTP. |
+| safeguards       | No       | `false`                      | `true`        | Refuse to deploy when `delete` is enabled and there is nothing to deploy, which would wipe the remote directory. |
 | dry_run          | No       | `true`                       | `false`       | Run without making changes (test the deployment).           |
 | pre_script       | No       | `echo Pre deploy`            | —             | Shell script to run before transfer.                        |
 | post_script      | No       | `echo Post deploy`           | —             | Shell script to run after transfer.                         |
